@@ -1,17 +1,37 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
+import LoginForm from './components/LoginForm.vue'
+import RegisterForm from './components/Registerform.vue'
+import Home from './components/Home.vue'
+
+let token = ref("");
+let view = ref("");
+if(localStorage.getItem("token") != undefined) {
+  view = ref('home');
+} else {
+  view = ref('login');
+}
+
+function changeView(value) {
+  view.value = value;
+}
+function setToken(t) {
+  token.value = t;
+  changeView("home");
+  localStorage.setItem("token", t);
+}
+
+
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <LoginForm @view="changeView" @token="setToken" v-if="view == 'login'"/>
+  <RegisterForm @view="changeView" v-if="view == 'register'"/>
+  <Home @view="changeView" v-if="view == 'home'"/>
 </template>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
