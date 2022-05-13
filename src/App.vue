@@ -8,6 +8,7 @@ let token = ref("");
 let view = ref("");
 if(localStorage.getItem("token") != undefined) {
   view = ref('home');
+  token.value = localStorage.getItem("token");
 } else {
   view = ref('login');
 }

@@ -16,10 +16,12 @@ function logIn() {
 })
 .then(response => response.json())
 .then(data => {
-  emit('token', data.data.token);
+  if (data.data.token != undefined) {
+    emit('token', data.data.token);
+  }
 })
 .catch((error) => {
-  console.error(error);
+  console.log("Invalid login credentials");
 });
 }
 

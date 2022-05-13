@@ -4,9 +4,10 @@
     background-color: colors.$primary;
     border: 0;
     box-shadow: -6px -6px 12px rgba(255, 255, 255, 0.7), 6px 6px 12px rgba(189, 200, 223, 0.7);
-    border-radius: 24px;
+    border-radius: 32px;
 
     font-weight: 900;
+    font-size: 1.25rem;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     color: colors.$text;
 
@@ -22,3 +23,13 @@
 .btn:focus {
     box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.7), inset 2px 2px 4px rgba(189, 200, 223, 0.7);
   }
+
+.btn--small {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

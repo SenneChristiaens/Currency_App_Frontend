@@ -3,8 +3,11 @@
 * {
     box-sizing: border-box;
 }
-  body {
+body {
     background-color: colors.$background;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     color: colors.$text;
+}
+p {
+  font-size: 1.25rem;
 }

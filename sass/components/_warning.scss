@@ -1,0 +1,10 @@
+@use "../colors";
+
+.warning {
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    background-color: colors.$background;
+    width: 100%;
+    padding: 80% 0;
+}
