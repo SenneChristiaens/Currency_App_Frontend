@@ -35,12 +35,5 @@ div {
     display: flex;
     flex-direction: column;
 }
-.warning {
-    position: fixed;
-    left: 0%;
-    top: 0%;
-    background-color: #E9EAF0;
-    width: 100%;
-    padding: 50% 0;
-}
+
 </style>
