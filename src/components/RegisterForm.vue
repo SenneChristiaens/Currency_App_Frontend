@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 
+const emit = defineEmits(['view']);
+
 let firstName = ref("");
 let lastName = ref("");
 let email = ref("");
@@ -17,7 +19,8 @@ function Register() {
 })
 .then(response => response.json())
 .then(data => {
-  console.log(data);
+  emit("view", "login");
+
 })
 .catch((error) => {
   console.error(error);
