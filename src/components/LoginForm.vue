@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 
+const emit = defineEmits(['token']);
 let email = ref("");
 let pwd = ref("");
 
@@ -15,7 +16,7 @@ function logIn() {
 })
 .then(response => response.json())
 .then(data => {
-  console.log(data);
+  emit('token', data.data.token);
 })
 .catch((error) => {
   console.error(error);
