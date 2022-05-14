@@ -28,7 +28,8 @@ function getInfo() {
   info.value = data.data;
 })
 .catch((error) => {
-  console.error(error);
+  emit("view", "login");
+  localStorage.clear();
 });
 }
 
