@@ -11,3 +11,18 @@ body {
 p {
   font-size: 1.25rem;
 }
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  padding-inline-start: 0;
+}
+
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}

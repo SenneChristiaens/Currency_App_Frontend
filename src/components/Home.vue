@@ -1,10 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-function onclik() {
-    console.log(localStorage.getItem("token"));
-}
-
 const emit = defineEmits(['view']);
 let info = ref("");
 let logOutWarning = ref(false);
@@ -26,6 +22,9 @@ function getInfo() {
 .then(response => response.json())
 .then(data => {
   info.value = data.data;
+  localStorage.setItem('userId',data.data.id);
+  localStorage.setItem('firstname',data.data.firstname);
+  localStorage.setItem('lastname',data.data.lastname);
 })
 .catch((error) => {
   emit("view", "login");
@@ -44,12 +43,12 @@ onMounted(() => {
 <template>
     <div class="main">
         <h1>Hello {{ info.firstname }}!</h1>
-        <img src="../assets/eth.png" alt="IMDCOit" @click="onclik">
+        <img src="../assets/eth.png" alt="IMDCoin">
         <p>Your balance: {{ info.balance }} IC</p>
         <div class="flexrow">
-            <button @click="" class="btn btn--small"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+            <button @click="$emit('view','send')" class="btn btn--small"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
             <button @click="" class="btn btn--small"><i class="fa-solid fa-arrow-right-to-bracket"></i></button>
-            <button @click="" class="btn btn--small"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+            <button @click="$emit('view','transactions')" class="btn btn--small"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
         </div>
     </div>
 
