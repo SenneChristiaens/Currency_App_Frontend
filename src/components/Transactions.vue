@@ -1,9 +1,10 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 const emit = defineEmits(["view"]);
 let transactions = ref([]);
-let firstname = ref(localStorage.getItem("firstname"));
+let email = ref(localStorage.getItem("email"));
+let names = ref([]);
 
 function getTransactions() {
   let data = { token: localStorage.getItem("token") };
@@ -18,7 +19,38 @@ function getTransactions() {
     .then((data) => {
       if (data != undefined) {
         //        emit('token', data.data.token);
+        data.data.transactions.forEach(t => {
+            // t.sender = getNameByMail(t.sender);
+            // t.receiver = getNameByMail(t.receiver);
+            if(t.receiver != email.value) {
+                getNameByMail(t.receiver);
+                t.receiver = names.value[names.value.length]
+            } else if(t.sender != email.value) {
+                getNameByMail(t.sender);
+            }
+            
+        });
         transactions.value = data.data.transactions;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function getNameByMail(mail) {
+  let data = { token: localStorage.getItem("token"), email: mail };
+  fetch("http://localhost:3001/api/v1/users/email", {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data != undefined) {
+            names.value.push(data.data.firstname + " " + data.data.lastname);
       }
     })
     .catch((error) => {
@@ -36,19 +68,19 @@ onMounted(() => {
     <h1>Transactions</h1>
     <ul>
       <li v-for="(t, i) in transactions">
-
-        <div v-if="t.receiver == firstname" class="listitem">
+      <p>{{ t.receiver }}</p>
+        <div v-if="t.receiver == email.value" class="listitem">
             <i class="fa-solid fa-arrow-right-to-bracket green"></i>
-            <span>From {{ t.sender}}</span>
+            <span>From {{ names[i] }}</span>
             <span>{{ t.amount}} IC</span>
         </div>
 
-        <div v-if="t.sender == firstname" class="listitem">
+        <div v-if="t.sender == email.value" class="listitem">
             <i class="fa-solid fa-arrow-right-from-bracket red"></i>
-            <span>To {{ t.receiver}}</span>
+            <span>To {{ t.receiver }}</span>
             <span>{{ t.amount}} IC</span>
         </div>
-          
+        
 
       </li>
     </ul>

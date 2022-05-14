@@ -21,10 +21,12 @@ function getInfo() {
 })
 .then(response => response.json())
 .then(data => {
+  data.data.balance = data.data.balance.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   info.value = data.data;
   localStorage.setItem('userId',data.data.id);
   localStorage.setItem('firstname',data.data.firstname);
   localStorage.setItem('lastname',data.data.lastname);
+  localStorage.setItem('email',data.data.email);
 })
 .catch((error) => {
   emit("view", "login");
@@ -34,8 +36,8 @@ function getInfo() {
 
 onMounted(() => {
   getInfo();
-})
 
+})
 
 
 </script>
