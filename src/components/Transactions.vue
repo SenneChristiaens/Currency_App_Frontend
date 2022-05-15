@@ -27,6 +27,8 @@ function getTransactions() {
                 t.receiver = names.value[names.value.length]
             } else if(t.sender != email.value) {
                 getNameByMail(t.sender);
+                t.sender = names.value[names.value.length]
+
             }
             
         });
@@ -68,7 +70,6 @@ onMounted(() => {
     <h1>Transactions</h1>
     <ul>
       <li v-for="(t, i) in transactions">
-      <p>{{ t.receiver }}</p>
         <div v-if="t.receiver == email.value" class="listitem">
             <i class="fa-solid fa-arrow-right-to-bracket green"></i>
             <span>From {{ names[i] }}</span>
@@ -77,7 +78,7 @@ onMounted(() => {
 
         <div v-if="t.sender == email.value" class="listitem">
             <i class="fa-solid fa-arrow-right-from-bracket red"></i>
-            <span>To {{ t.receiver }}</span>
+            <span>To {{ names[i] }}</span>
             <span>{{ t.amount}} IC</span>
         </div>
         
