@@ -68,13 +68,13 @@ onMounted(() => {
     <h1>Transactions</h1>
     <ul>
       <li v-for="(t, i) in transactions">
-        <div v-if="t.receiver == email.value" class="listitem">
+        <div v-if="t.sender == email.value" class="listitem">
           <i class="fa-solid fa-arrow-right-to-bracket green"></i>
           <span>From {{ names[i] }}</span>
           <span>{{ t.amount }} IC</span>
         </div>
 
-        <div v-if="t.sender == email.value" class="listitem">
+        <div v-if="t.receiver == email.value" class="listitem">
           <i class="fa-solid fa-arrow-right-from-bracket red"></i>
           <span>To {{ names[i] }}</span>
           <span>{{ t.amount }} IC</span>
