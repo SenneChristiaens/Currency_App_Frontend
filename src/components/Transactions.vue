@@ -19,18 +19,16 @@ function getTransactions() {
     .then((data) => {
       if (data != undefined) {
         //        emit('token', data.data.token);
-        data.data.transactions.forEach(t => {
-            // t.sender = getNameByMail(t.sender);
-            // t.receiver = getNameByMail(t.receiver);
-            if(t.receiver != email.value) {
-                getNameByMail(t.receiver);
-                t.receiver = names.value[names.value.length]
-            } else if(t.sender != email.value) {
-                getNameByMail(t.sender);
-                t.sender = names.value[names.value.length]
-
-            }
-            
+        data.data.transactions.forEach((t) => {
+          // t.sender = getNameByMail(t.sender);
+          // t.receiver = getNameByMail(t.receiver);
+          if (t.receiver != email.value) {
+            getNameByMail(t.receiver);
+            t.receiver = names.value[names.value.length];
+          } else if (t.sender != email.value) {
+            getNameByMail(t.sender);
+            t.sender = names.value[names.value.length];
+          }
         });
         transactions.value = data.data.transactions;
       }
@@ -52,7 +50,7 @@ function getNameByMail(mail) {
     .then((response) => response.json())
     .then((data) => {
       if (data != undefined) {
-            names.value.push(data.data.firstname + " " + data.data.lastname);
+        names.value.push(data.data.firstname + " " + data.data.lastname);
       }
     })
     .catch((error) => {
@@ -71,18 +69,16 @@ onMounted(() => {
     <ul>
       <li v-for="(t, i) in transactions">
         <div v-if="t.receiver == email.value" class="listitem">
-            <i class="fa-solid fa-arrow-right-to-bracket green"></i>
-            <span>From {{ names[i] }}</span>
-            <span>{{ t.amount}} IC</span>
+          <i class="fa-solid fa-arrow-right-to-bracket green"></i>
+          <span>From {{ names[i] }}</span>
+          <span>{{ t.amount }} IC</span>
         </div>
 
         <div v-if="t.sender == email.value" class="listitem">
-            <i class="fa-solid fa-arrow-right-from-bracket red"></i>
-            <span>To {{ names[i] }}</span>
-            <span>{{ t.amount}} IC</span>
+          <i class="fa-solid fa-arrow-right-from-bracket red"></i>
+          <span>To {{ names[i] }}</span>
+          <span>{{ t.amount }} IC</span>
         </div>
-        
-
       </li>
     </ul>
   </div>
