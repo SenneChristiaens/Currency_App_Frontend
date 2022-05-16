@@ -51,9 +51,6 @@ onMounted(() => {
       <button @click="$emit('view', 'send')" class="btn btn--small">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
-      <button @click="" class="btn btn--small">
-        <i class="fa-solid fa-arrow-right-to-bracket"></i>
-      </button>
       <button @click="$emit('view', 'transactions')" class="btn btn--small">
         <i class="fa-solid fa-arrow-right-arrow-left"></i>
       </button>
