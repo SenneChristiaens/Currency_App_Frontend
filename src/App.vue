@@ -4,6 +4,7 @@ import LoginForm from "./components/LoginForm.vue";
 import RegisterForm from "./components/Registerform.vue";
 import Home from "./components/Home.vue";
 import Transactions from "./components/Transactions.vue";
+import Send from "./components/Send.vue";
 
 let token = ref("");
 let view = ref("");
@@ -29,6 +30,7 @@ function setToken(t) {
   <RegisterForm @view="changeView" v-if="view == 'register'" />
   <Home @view="changeView" v-if="view == 'home'" />
   <Transactions @view="changeView" v-if="view == 'transactions'" />
+  <Send @view="changeView" v-if="view =='send'"/>
 </template>
 
 <style>
