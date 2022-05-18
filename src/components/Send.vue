@@ -7,6 +7,7 @@ let amount = ref("");
 
 function Send() {
   let data = {
+    sender: localStorage.getItem("email"),
     receiver: receiver,
     amount: amount,
   };
