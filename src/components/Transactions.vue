@@ -82,7 +82,7 @@ onMounted(() => {
       </li>
     </ul>
   </div>
-  <button @click="emit('view', 'home')" class="btn btn--small top-left">
+  <button @click="emit('view', 'home')" class="btn btn--small btn--top-left">
     <i class="fa-solid fa-arrow-left"></i>
   </button>
 </template>
@@ -92,9 +92,5 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
 }
-.top-left {
-  position: fixed;
-  top: 0;
-  left: 0;
-}
+
 </style>
