@@ -10,8 +10,8 @@ let success = ref();
 function send() {
   let data = {
     sender: localStorage.getItem("email"),
-    receiver: receiver,
-    amount: amount,
+    receiver: receiver.value,
+    amount: amount.value,
   };
   fetch("http://localhost:3001/api/v1/transactions/create", {
     method: "POST", // or 'PUT'
