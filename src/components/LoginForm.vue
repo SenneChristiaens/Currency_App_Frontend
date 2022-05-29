@@ -4,6 +4,7 @@ import { ref } from "vue";
 const emit = defineEmits(["view"]);
 let email = ref("");
 let pwd = ref("");
+let message = ref(false);
 
 function logIn() {
   let data = { email: email, password: pwd };
@@ -23,6 +24,7 @@ function logIn() {
     })
     .catch((error) => {
       console.log("Invalid login credentials");
+      message.value = true;
     });
 }
 
@@ -32,6 +34,7 @@ function logIn() {
 <template>
   <div>
     <h1>Login</h1>
+    <p class="message message--bad" v-if="message">Invalid login credentials</p>
     <input type="email" placeholder="E-mail" v-model="email" class="input" />
     <input type="password" placeholder="Password" v-model="pwd" class="input" />
     <button @click="logIn" class="btn">Log in</button>
