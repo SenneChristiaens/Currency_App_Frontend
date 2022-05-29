@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import LoginForm from "./components/LoginForm.vue";
-import RegisterForm from "./components/Registerform.vue";
+import RegisterForm from "./components/RegisterForm.vue";
 import Home from "./components/Home.vue";
 import Transactions from "./components/Transactions.vue";
 import Send from "./components/Send.vue";
