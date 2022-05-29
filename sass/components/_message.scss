@@ -1,0 +1,14 @@
+@use "../colors";
+
+.message {
+  font-weight: bold;
+}
+
+.message--bad {
+    color: rgb(243, 31, 31);
+
+}
+.message--good {
+    color: rgb(0, 183, 0);
+
+}

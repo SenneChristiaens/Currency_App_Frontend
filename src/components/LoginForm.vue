@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
-const emit = defineEmits(["token"]);
+const emit = defineEmits(["view"]);
 let email = ref("");
 let pwd = ref("");
 
@@ -17,13 +17,16 @@ function logIn() {
     .then((response) => response.json())
     .then((data) => {
       if (data.data.token != undefined) {
-        emit("token", data.data.token);
+        localStorage.setItem("token", data.data.token);
+        emit("view", "loading");
       }
     })
     .catch((error) => {
       console.log("Invalid login credentials");
     });
 }
+
+
 </script>
 
 <template>

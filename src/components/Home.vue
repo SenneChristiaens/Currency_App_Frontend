@@ -2,51 +2,21 @@
 import { ref, onMounted } from "vue";
 
 const emit = defineEmits(["view"]);
-let info = ref("");
 let logOutWarning = ref(false);
+let firstName = ref(localStorage.getItem('firstname'));
+let balance = ref(localStorage.getItem('balance'));
 
 function logOut() {
   localStorage.clear();
   emit("view", "login");
 }
-
-function getInfo() {
-  let data = { token: localStorage.getItem("token") };
-  fetch("http://localhost:3001/api/v1/users/token", {
-    method: "POST", // or 'PUT'
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      data.data.balance = data.data.balance.replace(
-        /\B(?=(\d{3})+(?!\d))/g,
-        "."
-      );
-      info.value = data.data;
-      localStorage.setItem("userId", data.data.id);
-      localStorage.setItem("firstname", data.data.firstname);
-      localStorage.setItem("lastname", data.data.lastname);
-      localStorage.setItem("email", data.data.email);
-    })
-    .catch((error) => {
-      emit("view", "login");
-      localStorage.clear();
-    });
-}
-
-onMounted(() => {
-  getInfo();
-});
 </script>
 
 <template>
   <div class="main">
-    <h1>Hello {{ info.firstname }}!</h1>
+    <h1>Hello {{ firstName }}!</h1>
     <img src="../assets/eth.png" alt="IMDCoin" />
-    <p>Your balance: {{ info.balance }} IC</p>
+    <p>Your balance: {{ balance }} IC</p>
     <div class="flexrow">
       <button @click="$emit('view', 'send')" class="btn btn--small">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>

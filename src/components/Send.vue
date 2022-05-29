@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from "vue";
 
-const emit = defineEmits(["view"]);
+const emit = defineEmits(["view", "token"]);
 let receiver = ref("");
 let amount = ref("");
+let message = ref(false);
+let success = ref();
 
-function Send() {
+function send() {
   let data = {
     sender: localStorage.getItem("email"),
     receiver: receiver,
@@ -21,7 +23,13 @@ function Send() {
     .then((response) => response.json())
     .then((data) => {
       if (data != undefined) {
-        emit("view", "transactions");
+        if (data.status == "success") {
+          emit("token", data.data);
+          success.value = true;
+        } else {
+          success.value = false;
+        }
+        message.value = true;
       }
     })
     .catch((error) => {
@@ -31,7 +39,7 @@ function Send() {
 </script>
 
 <template>
-  <button @click="emit('view', 'home')" class="btn btn--small top-left">
+  <button @click="emit('view', 'home')" class="btn btn--small btn--top-left">
     <i class="fa-solid fa-arrow-left"></i>
   </button>
   <div>
@@ -43,7 +51,13 @@ function Send() {
       class="input"
     />
     <input type="number" placeholder="Amount" v-model="amount" class="input" />
-    <button @click="Send" class="btn">Send</button>
+    <button @click="send" class="btn">Send</button>
+    <div v-if="message" >
+      <p v-if="success" class="message message--good">Transaction Sent.</p>
+      <p v-if="!success" class="message message--bad">Something went wrong.</p>
+      <button v-if="message" @click="emit('view', 'home')" class="btn">Back</button>
+    </div>
+
   </div>
 </template>
 
