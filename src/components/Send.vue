@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const emit = defineEmits(["view", "token"]);
 let receiver = ref("");
 let amount = ref("");
 let message = ref(false);
 let success = ref();
+let users = ref();
+let userArray = ref();
 
 function send() {
   let data = {
@@ -36,6 +38,36 @@ function send() {
       console.error(error);
     });
 }
+
+function getUsers() {
+  let data = {token: localStorage.getItem("token")};
+  fetch("http://localhost:3001/api/v1/users/all", {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data)
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      userArray.value = Object.entries(data.data.users).map((arr) => ({
+        email: arr[0],
+        name: arr[1],
+      }));
+      
+      userArray.value.forEach(element => {
+        console.log(element.email);
+      });
+      users = data.data.users;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+onMounted(() => {
+  getUsers();
+});
 </script>
 
 <template>
@@ -44,13 +76,14 @@ function send() {
   </button>
   <div>
     <h1>Send coins</h1>
-    <input
-      type="text"
-      placeholder="Receiver's email"
-      v-model="receiver"
-      class="input"
-    />
-    <input type="number" placeholder="Amount" v-model="amount" class="input" />
+    <!-- <input type="text" placeholder="Receiver's email" v-model="receiver" class="input"/> -->
+    <select v-model="receiver" class="input" placeholder="receiver" required>
+    <option value="" disabled selected>receiver</option>
+      <option v-for="u in userArray" :value="u.email">
+        {{ u.name }}
+      </option>
+    </select>    
+    <input type="number" placeholder="Amount" v-model="amount" class="input" required/>
     <button @click="send" class="btn">Send</button>
     <div v-if="message" >
       <p v-if="success" class="message message--good">Transaction Sent.</p>

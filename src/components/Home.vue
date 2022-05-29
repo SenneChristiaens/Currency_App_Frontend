@@ -10,6 +10,7 @@ function logOut() {
   localStorage.clear();
   emit("view", "login");
 }
+  
 </script>
 
 <template>
